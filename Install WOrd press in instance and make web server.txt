@@ -1,0 +1,46 @@
+#!/bin/bash
+
+yum install httpd php php-mysql -y
+
+cd /var/www/html
+
+wget https://wordpress.org/latest.tar.gz
+
+tar -xzf latest.tar.gz
+
+cp -r wordpress/* /var/www/html/
+
+rm -rf wordpress
+
+rm -rf latest.tar.gz
+
+chmod -R 755 wp-content
+
+chown -R apache:apache wp-content
+
+chkconfig httpd on
+
+
+service httpd start
+
+
+--------------------------
+How to update PHP version in Amazon Linux to PHP 5.6 
+--https://stackoverflow.com/questions/29206795/how-to-install-php5-6-in-amazon-linux
+
+2. Remove old versions of PHP and Apache
+sudo service httpd stop
+sudo yum remove httpd* php*
+
+3. Update the packages
+sudo yum clean all
+sudo yum update -y
+
+4. Install new version of PHP and Apache
+sudo yum install php56
+
+5. Start the web server
+sudo service httpd start 
+
+6. Check the websites
+httpd -v
